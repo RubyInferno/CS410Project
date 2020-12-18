@@ -1,0 +1,25 @@
+      private void button1_Click(object sender, EventArgs e)
+        {
+
+            Brush The_Brush = (Brush)Brushes.Black;
+            Pen Parker = new Pen(Color.Red);
+            Graphics g = this.CreateGraphics();
+
+            int x;
+            int y;
+
+            for (x = 16; x < 1250; x = x + 4)
+            {
+                for (y = 16; y < 720; y = y + 4)
+                {
+                    g.FillRectangle(The_Brush, x, y, 1, 1);
+                }
+            }//End of Outer For Loop
+
+            //g.FillRectangle(aBrush, 16, 16, 1, 36);
+            
+
+
+           
+
+        }
