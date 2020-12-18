@@ -1,0 +1,156 @@
+using OpenXmlPowerTools;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace TheMapGeneratorLanguage
+{
+
+   
+
+    public partial class Form1 : Form
+    {
+        //Global variables
+
+        int Point_A_X, Point_B_X, Point_A_Y, Point_B_Y; 
+        int Point_Previous_X, Point_Previous_Y, Point_Next_X, Point_Next_Y;
+        int Triangle_A_X, Triangle_A_Y, Triangle_B_X, Triangle_B_Y, Triangle_C_X, Triangle_C_Y;
+
+      
+
+       
+
+        bool Last_Execution;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+     
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            Brush The_Brush = (Brush)Brushes.Black;
+            Pen Parker = new Pen(Color.Red);
+            Graphics g = this.CreateGraphics();
+
+            int x;
+            int y;
+
+            for (x = 16; x < 1250; x = x + 4)
+            {
+                for (y = 16; y < 720; y = y + 4)
+                {
+                    g.FillRectangle(The_Brush, x, y, 1, 1);
+                }
+            }//End of Outer For Loop
+
+            //g.FillRectangle(aBrush, 16, 16, 1, 36);
+            
+
+
+           
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Generate Co-ordinates (Two Points) within the canvas to draw a line
+
+            Random Random_Handler = new Random();
+    
+
+            //Assign Random Numbers
+
+            Point_A_X = Random_Handler.Next(16, 1200);
+            Point_B_X = Random_Handler.Next(16, 1200);
+            Point_A_Y = Random_Handler.Next(16, 700);
+            Point_B_Y = Random_Handler.Next(16, 700);
+
+            //Initialize necessary tools to draw
+
+            Pen Parker = new Pen(Color.Red);
+            Graphics Handle_This_Pen = this.CreateGraphics();
+
+            //Draw that line
+
+            Handle_This_Pen.DrawLine(Parker, Point_A_X, Point_A_Y, Point_B_X, Point_B_Y);
+
+
+            Last_Execution = true;
+
+           
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            //Generate Co-ordinates (Two Points) within the canvas to draw a line
+
+            Random Random_Handler = new Random();
+            Point_Next_X = Random_Handler.Next(16, 1200);
+            Point_Next_Y = Random_Handler.Next(16, 700);
+
+            if (Last_Execution == true)
+            {
+                Point_Previous_X = Point_B_X;
+                Point_Previous_Y = Point_B_Y;
+            }                 
+
+            
+           
+
+            //Initialize necessary tools to draw
+
+            Pen Parker = new Pen(Color.Blue);
+            Graphics Handle_This_Pen = this.CreateGraphics();
+
+            //Draw that line
+
+            Handle_This_Pen.DrawLine(Parker, Point_Previous_X, Point_Previous_Y, Point_Next_X, Point_Next_Y);
+
+            //Set the ending co-ordinates as the new "previous" co-ordinates for the next connected line
+
+            Point_Previous_X = Point_Next_X;
+            Point_Previous_Y = Point_Next_Y;
+
+            Last_Execution = false;
+        }
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Random Random_Handler = new Random(); //Random Co-ordinate Generator (Integers)
+
+            //Point A
+
+            Triangle_A_X = Random_Handler.Next(16, 1200);
+            Triangle_A_Y = Random_Handler.Next(16, 700);
+
+            //Point B
+
+            Triangle_B_X = Random_Handler.Next(16, 1200);
+            Triangle_B_Y = Random_Handler.Next(16, 700);
+
+            //Point C
+
+            Triangle_C_X = Random_Handler.Next(16, 1200);
+            Triangle_C_Y = Random_Handler.Next(16, 700);
+
+            //Initialize necessary tools to draw
+
+            Pen Parker = new Pen(Color.Green);
+            Graphics Handle_This_Pen = this.CreateGraphics();
+
+            //Connect the points to form the triangle
+
+            Handle_This_Pen.DrawLine(Parker, Triangle_A_X, Triangle_A_Y, Triangle_B_X, Triangle_B_Y); //A to B
+            Handle_This_Pen.DrawLine(Parker, Triangle_B_X, Triangle_B_Y, Triangle_C_X, Triangle_C_Y); //B to C
+            Handle_This_Pen.DrawLine(Parker, Triangle_A_X, Triangle_A_Y, Triangle_C_X, Triangle_C_Y); //A to C
+        }
+
+    }
+}
